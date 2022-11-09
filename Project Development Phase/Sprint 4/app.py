@@ -1,42 +1,37 @@
 import os
-from flask import Flask,request,render_template # Flask-It is our framework which we are going to use to run/serve our application.
-#request-for accessing file which was uploaded by the user on our application.
-#render_template- used for rendering the html pages
-# from tensorflow import tf #to load our trained model
+import numpy as np 
+from flask import Flask,request,render_template 
+import pickle
 
 
+app= Flask(__name__)
 
-app=Flask(__name__)#our flask app
-# model= tf.load_model(r'model\model.h5')#loading the model
-
-@app.route("/") #default route
+@app.route("/") 
 def about():
-    return render_template("about.html")#rendering html page
+    return render_template("about.html")
 
-@app.route("/about") #route about page
+@app.route("/about")
 def home():
-    return render_template("about.html")#rendering html page
+    return render_template("about.html")
 
-@app.route("/info") # route for info page
+@app.route("/info") 
 def information():
-    return render_template("info.html")#rendering html page
+    return render_template("info.html")
 
-@app.route("/upload") # route for uploads
+@app.route("/upload")
 def test():
-    return render_template("predict.html")#rendering html page
+    return render_template("predict.html")
 
-@app.route("/predict",methods=["GET","POST"]) #route for our prediction
+@app.route("/predict",methods=["GET","POST"]) 
 def upload():
     if request.method=='POST':
-        print()
+        print(request)
+        model = pickle.load(open('model.pkl','rb'))
         # pred=model.predict(x)
-      
+        return 1    
     return None
 
-
-port = 4800
 if __name__=="__main__":
-    app.run(debug=False)#running our app
-    #app.run(host='0.0.0.0', port=8000,debug=False)
+    app.run(debug=False,port=5500)
             
             
